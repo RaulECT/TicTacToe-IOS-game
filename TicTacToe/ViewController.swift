@@ -9,15 +9,30 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //MARK: Properties
+    var activePlayer = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    //MARK: Public functions
+    func playGame(buttonSelected:UIButton) {
+        if activePlayer == 1 {
+            buttonSelected.setTitle("X", for: UIControlState.normal)
+            activePlayer = 2
+        } else {
+            buttonSelected.setTitle("O", for: UIControlState.normal)
+            activePlayer = 1
+        }
+    }
+   
+    //MARK: Actions
+    @IBAction func buttonSelectEvent(_ sender: Any) {
+        let buttonSelected = sender as! UIButton
+        playGame(buttonSelected: buttonSelected)
     }
 
 
