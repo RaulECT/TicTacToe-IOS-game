@@ -146,7 +146,7 @@ class ViewController: UIViewController {
             if winner == 1 {
                 msg = " Player 1 is winner!"
             } else {
-                msg = " Player 2 is wonner!"
+                msg = " Player 2 is winner!"
             }
             
             //Show alert
@@ -190,6 +190,41 @@ class ViewController: UIViewController {
         
         let runIndex =  arc4random_uniform(UInt32(emptyCells.count))
         let cellID = emptyCells[Int(runIndex)]
+        let butotnSelected:UIButton?
+        
+        switch cellID {
+        case 1:
+            butotnSelected = button1
+        
+        case 2:
+            butotnSelected = button2
+            
+        case 3:
+            butotnSelected = button3
+            
+        case 4:
+            butotnSelected = button4
+            
+        case 5:
+            butotnSelected = button5
+            
+        case 6:
+            butotnSelected = button6
+            
+        case 7:
+            butotnSelected = button7
+        
+        case 8:
+            butotnSelected = button8
+            
+        case 9:
+            butotnSelected = button9
+            
+        default:
+            butotnSelected = button1
+        }
+        
+        playGame(buttonSelected: butotnSelected!)
     }
    
     //MARK: Actions
