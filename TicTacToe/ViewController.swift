@@ -10,6 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    @IBOutlet weak var button4: UIButton!
+    @IBOutlet weak var button5: UIButton!
+    @IBOutlet weak var button6: UIButton!
+    @IBOutlet weak var button7: UIButton!
+    @IBOutlet weak var button8: UIButton!
+    @IBOutlet weak var button9: UIButton!
+    
     //MARK: Properties
     var activePlayer = 1
     var firstPlayer = [Int]()
@@ -18,6 +29,40 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    //MARK: Public functions
+    func resetGame(){
+        button1.setTitle( "", for: UIControlState.normal)
+        button1.isEnabled = true
+        
+        button2.setTitle( "", for: UIControlState.normal)
+        button2.isEnabled = true
+        
+        button3.setTitle( "", for: UIControlState.normal)
+        button3.isEnabled = true
+        
+        button4.setTitle( "", for: UIControlState.normal)
+        button4.isEnabled = true
+        
+        button5.setTitle( "", for: UIControlState.normal)
+        button5.isEnabled = true
+        
+        button6.setTitle( "", for: UIControlState.normal)
+        button6.isEnabled = true
+        
+        button7.setTitle( "", for: UIControlState.normal)
+        button7.isEnabled = true
+        
+        button8.setTitle( "", for: UIControlState.normal)
+        button8.isEnabled = true
+        
+        button9.setTitle( "", for: UIControlState.normal)
+        button9.isEnabled = true
+        
+        activePlayer = 1
+        firstPlayer = [Int]()
+        secondPlayer = [Int]()
     }
     
     func findWinner() {
@@ -94,15 +139,34 @@ class ViewController: UIViewController {
         if (secondPlayer.contains(3) && secondPlayer.contains(5) && secondPlayer.contains(7) ) {
             winner = 2
         }
+        
+        if winner != -1 {
+            var msg = ""
+            
+            if winner == 1 {
+                msg = " Player 1 is winner!"
+            } else {
+                msg = " Player 2 is wonner!"
+            }
+            
+            //Show alert
+            let alert = UIAlertController(title: "Winner", message: msg, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            
+            resetGame()
+            self.present(alert, animated: true, completion: resetGame)
+            
+        }
     }
     
-    //MARK: Public functions
+    
     func playGame(buttonSelected:UIButton) {
         if activePlayer == 1 {
             buttonSelected.setTitle("X", for: UIControlState.normal)
             
             firstPlayer.append(Int(buttonSelected.tag))
             activePlayer = 2
+            autoPlay()
         } else {
             buttonSelected.setTitle("O", for: UIControlState.normal)
             
@@ -110,7 +174,22 @@ class ViewController: UIViewController {
             activePlayer = 1
         }
         
+        findWinner()
         buttonSelected.isEnabled = false
+    }
+    
+    func autoPlay() {
+        //scan empty cells
+        var emptyCells = [Int]()
+        
+        for index in 1...9 {
+            if !(firstPlayer.contains(index) || secondPlayer.contains(index)) {
+                emptyCells.append(index)
+            }
+        }
+        
+        let runIndex =  arc4random_uniform(UInt32(emptyCells.count))
+        let cellID = emptyCells[Int(runIndex)]
     }
    
     //MARK: Actions
